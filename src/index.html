@@ -72,6 +72,7 @@
                 </div>
               </div>
             </div>
+            <div style="margin-top: 5px;">Tổng tiền: <span id="tb-dh-sum">0</span></div>
           </div>
 
           <div class="table-responsive">
@@ -143,6 +144,7 @@
                 </div>
               </div>
             </div>
+            <div style="margin-top: 5px;">Tổng tiền: <span id="tb-lh-sum">0</span></div>
           </div>
 
           <div class="table-responsive">
@@ -439,6 +441,8 @@
                 // Update table
                 tbDatHang.clear().draw();
                 tbDatHang.rows.add(res).draw();
+                let sum1 = res.sum("c3");
+                $("#tb-dh-sum").text(formatter.format(sum1));
 
                 tbDatHang.columns().every(function() {
                   var column = this;
@@ -455,6 +459,11 @@
                       .on("change", function() {
                         var val = $.fn.dataTable.util.escapeRegex($(this).val());
                         let search = column.search(val ? "^" + val + "$" : "", true, false).draw();
+                        let newsum1 = search
+                          .column(3, { filter: "applied" })
+                          .data()
+                          .sum();
+                        $("#tb-dh-sum").text(formatter.format(newsum1));
                       });
                     column
                       .data()
@@ -502,6 +511,8 @@
                 // Update table
                 tbLayHang.clear().draw();
                 tbLayHang.rows.add(res).draw();
+                let sum2 = res.sum("c3");
+                $("#tb-lh-sum").text(formatter.format(sum2));
 
                 tbLayHang.columns().every(function() {
                   var column = this;
@@ -518,6 +529,11 @@
                       .on("change", function() {
                         var val = $.fn.dataTable.util.escapeRegex($(this).val());
                         let search = column.search(val ? "^" + val + "$" : "", true, false).draw();
+                        let newsum2 = search
+                          .column(3, { filter: "applied" })
+                          .data()
+                          .sum();
+                        $("#tb-lh-sum").text(formatter.format(newsum2));
                       });
                     column
                       .data()
